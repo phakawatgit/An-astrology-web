@@ -1,0 +1,21 @@
+# Node
+node_modules
+.next
+out
+dist
+
+# Env
+.env
+.env.local
+.env.production
+
+# Logs
+*.log
+
+# Docker
+docker-data
+mysql_data
+
+# OS
+.DS_Store
+Thumbs.db
