@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+:root {
+  --bg-dark: #261C24;
+  --rose-muted: #A1838B;
+  --peach: #E2A391;
+  --pink-soft: #CF8D9B;
+}
+.perspective {
+  perspective: 1200px;
+}
+
+.transform-style {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
