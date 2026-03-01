@@ -1,0 +1,11 @@
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile  # ใช้ Dockerfile ตัวปกติ (ไม่ใช่ .prod)
+    command: npm run dev      # เปลี่ยนจาก start เป็น dev
+    volumes:
+      - ./app:/app            # สำคัญมาก! คือการเชื่อมโฟลเดอร์ในเครื่องกับใน Container
+      - /app/node_modules     # ป้องกันไม่ให้ node_modules ในเครื่องไปทับใน Container
+    ports:
+      - "3000:3000"
