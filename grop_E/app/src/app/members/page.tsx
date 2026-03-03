@@ -1,11 +1,10 @@
-import { prisma } from '../lib/prisma';
+import pool from '@/lib/db'; // ดึง pool จาก mysql2 มาใช้แทน (เช็ค path ให้ตรงกับโฟลเดอร์ของคุณนะครับ)
 
 async function getMembers() {
   try {
-    const members = await prisma.member.findMany({
-      orderBy: { studentId: 'asc' },
-    });
-    return members;
+    // ใช้คำสั่ง SQL ดิบๆ ดึงข้อมูลและเรียงลำดับตามรหัสนักศึกษา (ASC)
+    const [rows] = await pool.query('SELECT * FROM Member ORDER BY studentId ASC');
+    return rows as any[];
   } catch (error) {
     console.error("Database Error:", error);
     return [];
@@ -33,7 +32,7 @@ export default async function MembersPage() {
         {members.length === 0 ? (
           <div className="bg-white p-10 rounded-2xl shadow-sm text-center border-2 border-dashed border-gray-200">
             <p className="text-gray-500 text-xl">ไม่พบข้อมูลสมาชิกในระบบ</p>
-            <p className="text-sm text-gray-400 mt-2">กรุณาเพิ่มข้อมูลผ่าน phpMyAdmin หรือ Seed Data</p>
+            <p className="text-sm text-gray-400 mt-2">กรุณาเพิ่มข้อมูลผ่าน phpMyAdmin</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -67,7 +66,8 @@ export default async function MembersPage() {
 
         {/* ส่วนท้ายหน้า */}
         <footer className="mt-16 text-center text-gray-400 text-sm">
-          <p>© 2026 An-astrology-web Project - Connected via Prisma 7</p>
+          {/* เปลี่ยนข้อความ Credit ด้านล่างนิดหน่อยให้เข้ากับ mysql2 ครับ */}
+          <p>© 2026 An-astrology-web Project - Connected via MySQL2</p>
         </footer>
       </div>
     </div>
