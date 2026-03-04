@@ -5,8 +5,8 @@ services:
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: mydb
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: members
       MYSQL_USER: user
       MYSQL_PASSWORD: userpassword
     ports:
