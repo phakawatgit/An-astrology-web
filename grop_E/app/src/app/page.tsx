@@ -1,26 +1,39 @@
-import React from 'react';
+import { prisma } from "@/lib/prisma"
+import Link from "next/link"
 
-export default function Home() {
+export default async function HomePage() {
+  const members = await prisma.member.findMany({
+    orderBy: { id: "asc" },
+  });
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-gray-50">
-      <div className="bg-white p-10 rounded-2xl shadow-lg max-w-2xl w-full border border-gray-100">
-        <h1 className="text-4xl font-bold text-center text-indigo-600 mb-6">
-          🔮 An Astrology Web
-        </h1>
-        
-        <div className="space-y-4 text-center">
-          <p className="text-xl text-gray-800 font-medium">
-            ยินดีด้วย! ระบบของคุณพร้อมใช้งานแล้ว 🎉
-          </p>
-          
-          <div className="bg-green-50 text-green-700 p-4 rounded-lg text-sm font-mono mt-6 inline-block text-left w-full">
-            <p>✅ Next.js (App Router)</p>
-            <p>✅ Tailwind CSS</p>
-            <p>✅ Prisma & MySQL</p>
-            <p>✅ Docker Container</p>
-          </div>
-        </div>
+    <main className="min-h-screen flex flex-col items-center justify-center
+      bg-[radial-gradient(circle_at_center,#3a2731_0%,#261C24_70%)]">
+
+      <h1 className="text-4xl mb-12 tracking-widest text-[var(--peach)]">
+        CHOOSE YOUR DESTINY
+      </h1>
+
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-10">
+        {members.map((member) => (
+          <Link
+            key={member.id}
+            href={`/result/${member.id}`}
+            className="flex flex-col items-center cursor-pointer"
+          >
+            <img
+              src={member.imageUrl}
+              alt={member.alias}
+              className="w-40 h-60 object-cover rounded-xl shadow-lg border border-[var(--peach)] hover:scale-105 transition"
+            />
+
+            <p className="mt-4 text-[var(--peach)] tracking-wider">
+              {member.alias}
+            </p>
+          </Link>
+        ))}
       </div>
+
     </main>
-  );
+  )
 }
